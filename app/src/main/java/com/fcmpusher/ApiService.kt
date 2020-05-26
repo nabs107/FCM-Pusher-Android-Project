@@ -1,6 +1,7 @@
 package com.fcmpusher
 
 import android.util.Log
+import com.fcmpusher.constants.APIConstants
 import com.fcmpusher.model.FCMResponse
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.gson.responseObject
@@ -10,7 +11,7 @@ class ApiService {
 
     fun pushNotification(headers: Map<String, Any>, body: Map<String, Any>, returnValue: (Boolean) -> Unit) {
 
-        Fuel.post("https://fcm.googleapis.com/fcm/send")
+        Fuel.post(APIConstants.PUSH_FCM)
             .jsonBody(Gson().toJson(body))
             .header(headers)
             .also { Log.d("APIService: ", it.cUrlString()) }

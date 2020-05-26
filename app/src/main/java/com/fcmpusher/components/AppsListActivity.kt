@@ -10,6 +10,7 @@ import com.fcmpusher.ApiService
 import com.fcmpusher.R
 import com.fcmpusher.adapter.AppListAdapter
 import com.fcmpusher.base.BaseActivity
+import com.fcmpusher.constants.Constants
 import com.fcmpusher.databinding.ActivityAppsListBinding
 import com.fcmpusher.model.App
 import com.fcmpusher.viewmodel.AppListViewModel
@@ -50,19 +51,19 @@ class AppsListActivity : BaseActivity<ActivityAppsListBinding>() {
         bottomSheetLayout.btnPush.setOnClickListener {
             if (validate()) {
                 val params: MutableMap<String, Any> = HashMap()
-                params["content_available"] = true
-                params["mutable_content"] = true
-                params["priority"] = "high"
-                params["registration_ids"] = listOf(selectedApp.fcmKey)
+                params[Constants.CONTENT_AVAILABLE] = true
+                params[Constants.MUTABLE_CONTENT] = true
+                params[Constants.PRIORITY] = "high"
+                params[Constants.REGISTRATION_IDS] = listOf(selectedApp.fcmKey)
 
                 val notification: MutableMap<String, Any> = HashMap()
-                params["title"] = bottomSheetLayout.etTitle.text.toString()
-                params["body"] = bottomSheetLayout.etBody.text.toString()
-                params["notification"] = notification
+                params[Constants.TITLE] = bottomSheetLayout.etTitle.text.toString()
+                params[Constants.BODY] = bottomSheetLayout.etBody.text.toString()
+                params[Constants.NOTIFICATION] = notification
 
                 val headers: MutableMap<String, Any> = HashMap()
-                headers["Content-Type"] = "application/json"
-                headers["Authorization"] = "key=".plus(selectedApp.fcmKey)
+                headers[Constants.CONTENT_TYPE] = "application/json"
+                headers[Constants.AUTHORIZATION] = "key=".plus(selectedApp.fcmKey)
                 ApiService().pushNotification(headers, params) { returnValue: Boolean ->
                     if (returnValue) {
                         Toast.makeText(this, "Push Success", Toast.LENGTH_SHORT).show()
